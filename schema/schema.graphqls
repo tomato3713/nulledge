@@ -1,0 +1,31 @@
+# GraphQL schema
+
+type Page {
+  id: ID!
+  text: String!
+  format: MarkupLanguage!
+  user: User!
+}
+
+type User {
+  id: ID!
+  name: String!
+}
+
+type Query {
+  pages: [Page!]!
+}
+
+input NewPage {
+  text: String!
+  userId: String!
+}
+
+type Mutation {
+  createPage(input: NewPage!): Page!
+}
+
+enum MarkupLanguage {
+	MARKDOWN
+	ASCIIDOC
+}
