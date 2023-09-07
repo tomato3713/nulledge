@@ -16,16 +16,7 @@ func (r *mutationResolver) CreatePage(ctx context.Context, input model.NewPage) 
 	panic(fmt.Errorf("not implemented: CreatePage - createPage"))
 }
 
-// Pages is the resolver for the pages field.
-func (r *queryResolver) Pages(ctx context.Context) ([]*model.Page, error) {
-	panic(fmt.Errorf("not implemented: Pages - pages"))
-}
-
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
 
-// Query returns QueryResolver implementation.
-func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
-
 type mutationResolver struct{ *Resolver }
-type queryResolver struct{ *Resolver }
