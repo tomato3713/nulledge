@@ -6,13 +6,13 @@ COPY . $WORKDIR
 
 RUN go mod download
 RUN go install github.com/cespare/reflex
-RUN go build -o /wiki ${WORKDIR}/server.go
+RUN go build -o /nulledge ${WORKDIR}/server.go
 
 FROM debian:bookworm-slim AS release
 WORKDIR /
 
-COPY --from=builder /wiki /wiki
+COPY --from=builder /nulledge /nulledge
 
 EXPOSE 8080
 
-CMD ["/wiki"]
+CMD ["/nulledge"]
