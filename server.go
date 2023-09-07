@@ -2,8 +2,6 @@ package main
 
 import (
 	"context"
-	"database/sql"
-	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
@@ -11,9 +9,8 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/tomato3713/nulledge/database"
 	"github.com/tomato3713/nulledge/graph"
-	"github.com/uptrace/bun"
-	"github.com/uptrace/bun/dialect/mysqldialect"
 )
 
 const defaultPort = "8080"
@@ -21,22 +18,17 @@ const defaultPort = "8080"
 func main() {
 	ctx := context.Background()
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
-	sqldb, err := sql.Open("mysql", getDbConnStr())
-	if err != nil {
-		panic(err)
-	}
-
-	if err := sqldb.Ping(); err != nil {
-		panic(err)
-	}
-	logger.Info("ping to database is successed")
-
-	db := bun.NewDB(sqldb, mysqldialect.New())
 
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
 	}
+
+	db, err := database.Connect()
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
 
 	resolver := graph.NewResolver(&ctx, logger, db)
 
@@ -51,13 +43,4 @@ func main() {
 	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		logger.Warn("Exit", "err", err)
 	}
-}
-
-func getDbConnStr() string {
-	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=True",
-		os.Getenv("MYSQL_USER"),
-		os.Getenv("MYSQL_PASSWORD"),
-		os.Getenv("MYSQL_ADDR"),
-		os.Getenv("MYSQL_PORT"),
-		os.Getenv("MYSQL_TABLENAME"))
 }

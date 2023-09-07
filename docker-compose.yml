@@ -6,11 +6,8 @@ services:
     image: mysql:8.0.34
     ports:
       - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: nulledge_local
-      MYSQL_USER: nulledge
-      MYSQL_PASSWORD: password
+    env_file:
+      - db.env
     restart:
       always
     volumes:
@@ -29,9 +26,5 @@ services:
     tty: true
     volumes:
       - .:/app:cached
-    environment:
-      MYSQL_USER: nulledge
-      MYSQL_PASSWORD: password
-      MYSQL_TABLENAME: nulledge_local
-      MYSQL_ADDR: db
-      MYSQL_PORT: 3306
+    env_file:
+      - db.env

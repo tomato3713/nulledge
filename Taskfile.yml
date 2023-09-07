@@ -1,10 +1,20 @@
 version: '3'
 
+dotenv: ["db.env"]
+
 tasks:
-  conn_db:
+  db-conn:
     desc: 'connect db server'
     cmds:
       - docker compose exec db mysql -P 3306 -uroot -p nulledge_local
+  db-migrate:
+    desc: 'migrate db server'
+    cmds:
+      - docker compose exec api go run sql/migration.go
+  db-rollback:
+    desc: 'rollback db server'
+    cmds:
+      - docker compose exec api go run sql/migration.go -rollback
   logs:
     desc: 'show containers logs'
     cmds:
