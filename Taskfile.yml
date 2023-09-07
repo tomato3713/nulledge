@@ -1,6 +1,10 @@
 version: '3'
 
 tasks:
+  conn_db:
+    desc: 'connect db server'
+    cmds:
+      - docker compose exec db mysql -P 3306 -uroot -p nulledge_local
   logs:
     desc: 'show containers logs'
     cmds:
