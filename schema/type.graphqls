@@ -12,19 +12,6 @@ type User {
   name: String!
 }
 
-type Query {
-  pages: [Page!]!
-}
-
-input NewPage {
-  text: String!
-  userId: String!
-}
-
-type Mutation {
-  createPage(input: NewPage!): Page!
-}
-
 enum MarkupLanguage {
 	MARKDOWN
 	ASCIIDOC

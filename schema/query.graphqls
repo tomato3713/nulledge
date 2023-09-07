@@ -1,0 +1,8 @@
+type Query {
+  page(id: ID!): Page
+  pages: [Page!]!
+
+  users: [User!]!
+  user(id: ID!): [User!]!
+}
+

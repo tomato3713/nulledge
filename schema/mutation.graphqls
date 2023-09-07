@@ -1,0 +1,9 @@
+type Mutation {
+  createPage(input: NewPage!): Page!
+}
+
+input NewPage {
+  text: String!
+  userId: String!
+}
+
