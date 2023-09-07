@@ -26,6 +26,11 @@ func main() {
 		panic(err)
 	}
 
+	if err := sqldb.Ping(); err != nil {
+		panic(err)
+	}
+	logger.Info("ping to database is successed")
+
 	db := bun.NewDB(sqldb, mysqldialect.New())
 
 	port := os.Getenv("PORT")
@@ -49,5 +54,10 @@ func main() {
 }
 
 func getDbConnStr() string {
-	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=True", os.Getenv("MYSQL_USER"), os.Getenv("MYSQL_PASSWORD"), os.Getenv("MYSQL_ADDR"), os.Getenv("MYSQL_PORT"), os.Getenv("MYSQL_TABLENAME"))
+	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=True",
+		os.Getenv("MYSQL_USER"),
+		os.Getenv("MYSQL_PASSWORD"),
+		os.Getenv("MYSQL_ADDR"),
+		os.Getenv("MYSQL_PORT"),
+		os.Getenv("MYSQL_TABLENAME"))
 }
