@@ -6,29 +6,76 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
+	"github.com/tomato3713/nulledge/database"
 	"github.com/tomato3713/nulledge/graph/model"
 )
 
 // Page is the resolver for the page field.
 func (r *queryResolver) Page(ctx context.Context, id string) (*model.Page, error) {
-	panic(fmt.Errorf("not implemented: Page - page"))
+	var page database.Page
+	err := r.db.NewSelect().
+		Model(&page).
+		Where("id = ?", id).
+		Scan(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return &model.Page{
+		Page: &page,
+	}, nil
 }
 
 // Pages is the resolver for the pages field.
 func (r *queryResolver) Pages(ctx context.Context) ([]*model.Page, error) {
-	panic(fmt.Errorf("not implemented: Pages - pages"))
+	var pages []database.Page
+	err := r.db.NewSelect().
+		Model(&pages).
+		Scan(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	result := make([]*model.Page, 0, len(pages))
+	for _, v := range pages {
+		result = append(result, &model.Page{Page: &v})
+	}
+
+	return result, nil
 }
 
 // Users is the resolver for the users field.
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented: Users - users"))
+	users := []database.User{}
+	err := r.db.NewSelect().
+		Model(&users).
+		Scan(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	result := make([]*model.User, 0, len(users))
+	for _, v := range users {
+		result = append(result, &model.User{User: &v})
+	}
+
+	return result, nil
 }
 
 // User is the resolver for the user field.
-func (r *queryResolver) User(ctx context.Context, id string) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented: User - user"))
+func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
+	user := database.User{}
+	err := r.db.NewSelect().
+		Model(&user).
+		Where("id = ?", id).
+		Scan(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.User{
+		User: &user,
+	}, nil
 }
 
 // Query returns QueryResolver implementation.
