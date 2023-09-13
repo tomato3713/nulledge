@@ -8,20 +8,45 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/tomato3713/nulledge/database"
 	"github.com/tomato3713/nulledge/graph/model"
 )
 
+// ID is the resolver for the id field.
+func (r *pageResolver) ID(ctx context.Context, obj *model.Page) (string, error) {
+	return fmt.Sprintf("%d", obj.ID), nil
+}
+
 // Format is the resolver for the format field.
 func (r *pageResolver) Format(ctx context.Context, obj *model.Page) (model.MarkupLanguage, error) {
-	panic(fmt.Errorf("not implemented: Format - format"))
+	return model.MarkupLanguage(obj.MarkupLanguage), nil
 }
 
 // User is the resolver for the user field.
 func (r *pageResolver) User(ctx context.Context, obj *model.Page) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: User - user"))
+	user := database.User{}
+	err := r.db.NewSelect().
+		Model(&user).
+		Where("id = ?", obj.UserId).
+		Scan(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return &model.User{
+		User: &user,
+	}, nil
+}
+
+// ID is the resolver for the id field.
+func (r *userResolver) ID(ctx context.Context, obj *model.User) (string, error) {
+	return fmt.Sprintf("%d", obj.ID), nil
 }
 
 // Page returns PageResolver implementation.
 func (r *Resolver) Page() PageResolver { return &pageResolver{r} }
 
+// User returns UserResolver implementation.
+func (r *Resolver) User() UserResolver { return &userResolver{r} }
+
 type pageResolver struct{ *Resolver }
+type userResolver struct{ *Resolver }
