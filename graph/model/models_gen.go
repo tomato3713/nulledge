@@ -13,18 +13,6 @@ type NewPage struct {
 	UserID string `json:"userId"`
 }
 
-type Page struct {
-	ID     string         `json:"id"`
-	Text   string         `json:"text"`
-	Format MarkupLanguage `json:"format"`
-	User   *User          `json:"user"`
-}
-
-type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-}
-
 type MarkupLanguage string
 
 const (

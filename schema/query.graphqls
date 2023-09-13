@@ -3,6 +3,6 @@ type Query {
   pages: [Page!]!
 
   users: [User!]!
-  user(id: ID!): [User!]!
+  user(id: ID!): User
 }
 
