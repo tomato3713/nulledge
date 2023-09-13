@@ -38,6 +38,7 @@ func (r *queryResolver) Pages(ctx context.Context) ([]*model.Page, error) {
 
 	result := make([]*model.Page, 0, len(pages))
 	for _, v := range pages {
+		v := v // cute!
 		result = append(result, &model.Page{Page: &v})
 	}
 
@@ -56,6 +57,7 @@ func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
 
 	result := make([]*model.User, 0, len(users))
 	for _, v := range users {
+		v := v
 		result = append(result, &model.User{User: &v})
 	}
 

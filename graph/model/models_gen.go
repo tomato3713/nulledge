@@ -8,9 +8,13 @@ import (
 	"strconv"
 )
 
-type NewPage struct {
+type NewPageInput struct {
 	Text   string `json:"text"`
 	UserID string `json:"userId"`
+}
+
+type NewUserInput struct {
+	Name string `json:"name"`
 }
 
 type MarkupLanguage string
