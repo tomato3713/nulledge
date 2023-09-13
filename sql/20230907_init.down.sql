@@ -1,6 +1,6 @@
-DROP TABLE `pages`;
+DROP TABLE IF EXISTS `pages`;
 
 --bun:split
 
-DROP TABLE `users`;
+DROP TABLE IF EXISTS `users`;
 

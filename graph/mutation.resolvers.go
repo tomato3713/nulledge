@@ -6,14 +6,52 @@ package graph
 
 import (
 	"context"
-	"fmt"
+	"strconv"
 
+	"github.com/tomato3713/nulledge/database"
 	"github.com/tomato3713/nulledge/graph/model"
 )
 
 // CreatePage is the resolver for the createPage field.
-func (r *mutationResolver) CreatePage(ctx context.Context, input model.NewPage) (*model.Page, error) {
-	panic(fmt.Errorf("not implemented: CreatePage - createPage"))
+func (r *mutationResolver) CreatePage(ctx context.Context, input model.NewPageInput) (*model.Page, error) {
+	userId, err := strconv.ParseUint(input.UserID, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	page := database.Page{
+		Text:           "sample text",
+		MarkupLanguage: model.MarkupLanguageMarkdown.String(),
+		UserId:         userId,
+	}
+
+	_, err = r.db.NewInsert().
+		Model(&page).
+		Exec(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Page{
+		Page: &page,
+	}, nil
+}
+
+// CreateUser is the resolver for the createUser field.
+func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUserInput) (*model.User, error) {
+	user := database.User{
+		Name: input.Name,
+	}
+
+	_, err := r.db.NewInsert().
+		Model(&user).
+		Exec(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.User{
+		User: &user,
+	}, nil
 }
 
 // Mutation returns MutationResolver implementation.

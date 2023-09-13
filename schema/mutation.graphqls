@@ -1,9 +1,14 @@
 type Mutation {
-  createPage(input: NewPage!): Page!
+  createPage(input: NewPageInput!): Page!
+  createUser(input: NewUserInput!): User!
 }
 
-input NewPage {
+input NewPageInput {
   text: String!
   userId: String!
+}
+
+input NewUserInput {
+  name: String!
 }
 
