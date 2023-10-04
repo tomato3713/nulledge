@@ -12,6 +12,11 @@ services:
       always
     volumes:
       - ./tmp/mysql:/var/lib/mysql:delegated
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 2s
+      timeout: 1s
+      retries: 5
   api:
     container_name: api
     build:
@@ -21,7 +26,8 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     command: ["reflex", "-r", "^.*.go$", "-s", "go", "run", "./server.go"]
     tty: true
     volumes:
