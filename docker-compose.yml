@@ -34,3 +34,27 @@ services:
       - .:/app:cached
     env_file:
       - db.env
+  ui:
+    container_name: ui
+    build:
+      context: ./ui
+      dockerfile: ./Dockerfile
+      target: builder
+    ports:
+      - 3000:3000
+    command: ["sh", "-c", "npm run dev"]
+    volumes:
+      - type: volume
+        source: node_modules
+        target: /app/node_modules
+        volume:
+          nocopy: true
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - db
+      - api
+
+volumes:
+  node_modules:
+  yarn_cache:
