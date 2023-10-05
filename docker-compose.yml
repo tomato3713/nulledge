@@ -44,6 +44,24 @@ services:
       - 3000:3000
     command: ["sh", "-c", "npm run dev"]
     volumes:
+      - type: bind
+        source: ui/pages
+        target: /app/pages
+      - type: bind
+        source: ui/styles
+        target: /app/styles
+      - type: bind
+        source: ui/public
+        target: /app/public
+      - type: bind
+        source: ui/package.json
+        target: /app/package.json
+      - type: bind
+        source: ui/package-lock.json
+        target: /app/package-lock.json
+      - type: bind
+        source: ui/next.config.js
+        target: /app/next.config.js
       - type: volume
         source: node_modules
         target: /app/node_modules
