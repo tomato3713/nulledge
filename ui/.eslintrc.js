@@ -5,4 +5,7 @@ module.exports = {
 		"plugin:import/recommended",
 		"airbnb-base",
 	],
+	rules: {
+		"import/prefer-default-export": "off",
+	},
 };
