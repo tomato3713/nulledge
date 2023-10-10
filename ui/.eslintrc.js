@@ -6,6 +6,9 @@ module.exports = {
     "airbnb-base",
     "prettier",
   ],
+  parserOptions: {
+    project: "./tsconfig.json",
+  },
   rules: {
     "import/prefer-default-export": "off",
   },
