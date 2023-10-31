@@ -1,0 +1,7 @@
+version: '3'
+
+tasks:
+  gen:
+    desc: 'run graphql-codegen generator'
+    cmds:
+      - npx graphql-codegen --config ./codegen.yml
