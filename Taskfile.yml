@@ -2,6 +2,11 @@ version: '3'
 
 dotenv: ["db.env"]
 
+includes:
+  ui:
+    taskfile: ./ui/Taskfile.yml
+    dir: ./ui
+
 tasks:
   db-conn:
     desc: 'connect db server'
