@@ -1,0 +1,18 @@
+query getUsers {
+	users {
+		id
+		name
+	}
+}
+
+query getPages {
+	pages {
+		id
+		text
+		format
+		user {
+			id
+			name
+		}
+	}
+}
