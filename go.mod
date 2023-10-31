@@ -22,6 +22,7 @@ require (
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/ogier/pflag v0.0.1 // indirect
+	github.com/rs/cors v1.10.1
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
 	github.com/urfave/cli/v2 v2.25.5 // indirect
