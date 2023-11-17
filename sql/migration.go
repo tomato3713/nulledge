@@ -22,10 +22,11 @@ var (
 var sqlMigrations embed.FS
 
 func init() {
+	flag.Usage = usage
+
 	if err := Migrations.Discover(sqlMigrations); err != nil {
 		panic(err)
 	}
-
 }
 
 func rollback(ctx context.Context, db *bun.DB, migrator *migrate.Migrator) error {
